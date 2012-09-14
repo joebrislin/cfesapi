@@ -144,14 +144,14 @@
 		/*
 		 * Absolute path to the customDirectory
 		 */
-		instance.configurationDirectory = expandPath("\cfesapi\esapi\configuration\esapi\");
+		instance.configurationDirectory = expandPath("/cfesapi/esapi/configuration/esapi/");
 
 		/*
 		 * Relative path to the resourceDirectory. Relative to the classpath.
 		 * Specifically, ClassLoader.getResource(resourceDirectory + filename) will
 		 * be used to load the file.
 		 */
-		instance.resourceDirectory = ".esapi";// For backward compatibility (vs. "esapi")
+		instance.resourceDirectory = "/config";// For backward compatibility (vs. "esapi")
 		//instance.lastModified = -1;
 	</cfscript>
 
@@ -305,7 +305,7 @@
 
 	<cffunction access="public" returntype="void" name="setResourceDirectory" output="false">
 		<cfargument required="true" type="String" name="dir"/>
-
+		
 		<cfscript>
 			// check whether we are changing this so we do not reload configuration unless we have to
 			if(instance.resourceDirectory != arguments.dir) {
@@ -410,7 +410,7 @@
 		<cfset var local = {}/>
 
 		<cfscript>
-
+			
 			try {
 				//first attempt file IO loading of properties
 				logSpecial("Attempting to load " & this.RESOURCE_FILE & " via file I/O.");

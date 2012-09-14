@@ -60,8 +60,7 @@
 			local.request = arguments.request;
 			instance.response = arguments.response;
 			instance.ESAPI.httpUtilities().setCurrentHTTP(local.request, instance.response);
-
-			// figure out who the current user is
+			
 			try {
 				instance.ESAPI.authenticator().login(local.request, instance.response);
 			}
@@ -73,11 +72,20 @@
 				 * - Authentication failed for [username] because of blank username or password
 				 * - Authentication failed because user [username] doesn't exist
 				 */
+				
 				instance.ESAPI.authenticator().logout();
 				local.request.setAttribute("message", instance.unauthenticatedMessage);
 				//local.request.setAttribute("message", e.detail);
-				local.dispatcher = local.request.getRequestDispatcher(instance.unauthenticatedPath);
-				local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
+				/*****
+				*
+				* NOTE: J. Brislin 04/06/2012
+				* Had to hide the request dispatcher for use with FW/1. Java Dispatcher was looking on the internal file system for a file by an SES Url (i.e. /Login)
+				* Feels like a hack for now. Redirection is handling in application setupRequest();
+				*
+				******/
+				//local.dispatcher = local.request.getRequestDispatcher(instance.unauthenticatedPath);
+				//local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
+				
 				return false;
 			}
 			catch(cfesapi.org.owasp.esapi.errors.AuthenticationLoginException e) {
@@ -102,8 +110,15 @@
 				instance.ESAPI.authenticator().logout();
 				local.request.setAttribute("message", instance.unauthenticatedMessage);
 				//local.request.setAttribute("message", e.detail);
-				local.dispatcher = local.request.getRequestDispatcher(instance.unauthenticatedPath);
-				local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
+				/*****
+				*
+				* NOTE: J. Brislin 04/06/2012
+				* Had to hide the request dispatcher for use with FW/1. Java Dispatcher was looking on the internal file system for a file by an SES Url (i.e. /Login)
+				* Feels like a hack for now. Redirection is handling in application setupRequest();
+				*
+				******/
+				//local.dispatcher = local.request.getRequestDispatcher(instance.unauthenticatedPath);
+				//local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
 				return false;
 			}
 			catch(cfesapi.org.owasp.esapi.errors.AuthenticationException e) {
@@ -121,8 +136,15 @@
 				instance.ESAPI.authenticator().logout();
 				local.request.setAttribute("message", instance.unauthenticatedMessage);
 				//local.request.setAttribute("message", e.detail);
-				local.dispatcher = local.request.getRequestDispatcher(instance.unauthenticatedPath);
-				local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
+				/*****
+				*
+				* NOTE: J. Brislin 04/06/2012
+				* Had to hide the request dispatcher for use with FW/1. Java Dispatcher was looking on the internal file system for a file by an SES Url (i.e. /Login)
+				* Feels like a hack for now. View is included as a setView() call in setupRequest();
+				*
+				******/
+				//local.dispatcher = local.request.getRequestDispatcher(instance.unauthenticatedPath);
+				//local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
 				return false;
 			}
 
@@ -132,8 +154,16 @@
 			// check access to this URL
 			if(!instance.ESAPI.accessController().isAuthorizedForURL(local.request.getRequestURI())) {
 				local.request.setAttribute("message", instance.unauthorizedMessage);
-				local.dispatcher = local.request.getRequestDispatcher(instance.unauthorizedPath);
-				local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
+	
+				/*****
+				*
+				* NOTE: J. Brislin 04/06/2012
+				* Had to hide the request dispatcher for use with FW/1. Java Dispatcher was looking on the internal file system for a file by an SES Url (i.e. /Login)
+				* Feels like a hack for now. View is included as a setView() call in setupRequest();
+				*
+				******/
+				//local.dispatcher = local.request.getRequestDispatcher(instance.unauthorizedPath);
+				//local.dispatcher.forward(local.request.getHttpServletRequest(), instance.response.getHttpServletResponse());
 				return false;
 			}
 

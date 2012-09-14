@@ -208,6 +208,8 @@
 				return local.rule;
 			}
 
+			// TODO: Need Regex Pattern to account for Wild card instance
+			// TODO: Deny at this point if rule not passed. Regex wild card will allow you to do this.
 			// rule hasn't been found - if there are no more parts, return a deny
 			local.slash = local.part.lastIndexOf('/');
 			if(local.slash == -1) {

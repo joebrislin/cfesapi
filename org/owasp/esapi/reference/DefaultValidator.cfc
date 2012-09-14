@@ -145,6 +145,7 @@
 			local.rvr.setMaximumLength(arguments.maxLength);
 			local.rvr.setAllowNull(arguments.allowNull);
 			local.rvr.setValidateInputAndCanonical(arguments.canonicalize);
+			
 			return local.rvr.getValid(arguments.context, arguments.input);
 		</cfscript>
 

@@ -32,7 +32,7 @@
 		instance.accountId = 0;
 
 		/** This user's account name. */
-		instance.acountName = "";
+		instance.accountName = "";
 
 		/** This user's screen name (account name alias). */
 		instance.screenName = "";

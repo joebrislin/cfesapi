@@ -15,6 +15,6 @@
 	* @created 2011
 	*/
 	--->
-<cfinterface output="false">
+<cfinterface>
 	<!--- TODO --->
 </cfinterface>
